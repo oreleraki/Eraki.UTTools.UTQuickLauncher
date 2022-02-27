@@ -23,11 +23,11 @@ jobs:
     - name: Setup MSBuild
       uses: microsoft/setup-msbuild@v1
       
-    - name: Setup NuGet
-      uses: NuGet/setup-nuget@v1.0.5
+    #- name: Setup NuGet
+      #uses: NuGet/setup-nuget@v1.0.5
     
-    - name: Restore NuGet packages
-      run: nuget restore src\Eraki.UTTools.UTQuickLauncher.sln
+    #- name: Restore NuGet packages
+      #run: nuget restore src\Eraki.UTTools.UTQuickLauncher.sln
       
     - name: Get the version
       id: get_version
@@ -44,4 +44,4 @@ jobs:
       uses: actions/upload-artifact@v2
       with:
         name: UTQuickLauncher v${{steps.get_version.outputs.VERSION}}
-        path: bin\Release\UnrealTournamentLauncher.exe
+        path: src\Eraki.UTTools.UTQuickLauncher.WinForm\bin\Release\UnrealTournamentLauncher.exe
