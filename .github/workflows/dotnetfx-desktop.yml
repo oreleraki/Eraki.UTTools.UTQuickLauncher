@@ -41,7 +41,7 @@ jobs:
            .\MSBuild.exe $Env:GITHUB_WORKSPACE\src\Eraki.UTTools.UTQuickLauncher.sln /p:Configuration="Release" /p:Version="${{steps.get_version.outputs.VERSION}}"
            
     - name: Upload Release Artifact
-        uses: actions/upload-artifact@v2
-        with:
-          name: UTQuickLauncher v${{steps.get_version.outputs.VERSION}}
-          path: Bin\Release\UTQuickLauncher.exe
+      uses: actions/upload-artifact@v2
+      with:
+        name: UTQuickLauncher v${{steps.get_version.outputs.VERSION}}
+        path: Bin\Release\UTQuickLauncher.exe
