@@ -28,9 +28,18 @@ jobs:
     
     - name: Restore NuGet packages
       run: nuget restore src\Eraki.UTTools.UTQuickLauncher.sln
+      
+    - name: Get the version
+        id: get_version
+        run: echo ::set-output name=VERSION::$(echo $GITHUB_REF | cut -d / -f 3)
     
     - name: Build the Solution
       run: |
            cd "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild\Current\Bin\"
-           .\MSBuild.exe $Env:GITHUB_WORKSPACE\src\Eraki.UTTools.UTQuickLauncher.sln /p:Configuration="Release"
-      #run: msbuild src\Eraki.UTTools.UTQuickLauncher.sln /p:Configuration=Release
+           .\MSBuild.exe $Env:GITHUB_WORKSPACE\src\Eraki.UTTools.UTQuickLauncher.sln /p:Configuration="Release" /p:Version="${{steps.get_version.outputs.VERSION}}"
+           
+    - name: Upload Release Artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: UTQuickLauncher v${{steps.get_version.outputs.VERSION}}
+          path: Bin\Release\UTQuickLauncher.exe
