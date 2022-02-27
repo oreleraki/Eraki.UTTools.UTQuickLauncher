@@ -31,6 +31,6 @@ jobs:
     
     - name: Build the Solution
       run: |
-           "cd C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild\Current\Bin\"
+           cd "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild\Current\Bin\"
            .\MSBuild.exe $Env:GITHUB_WORKSPACE\src\Eraki.UTTools.UTQuickLauncher.sln /p:Configuration="Release"
       #run: msbuild src\Eraki.UTTools.UTQuickLauncher.sln /p:Configuration=Release
