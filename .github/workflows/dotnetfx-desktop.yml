@@ -44,4 +44,4 @@ jobs:
       uses: actions/upload-artifact@v2
       with:
         name: UTQuickLauncher v${{steps.get_version.outputs.VERSION}}
-        path: Bin\Release\UTQuickLauncher.exe
+        path: bin\Release\UnrealTournamentLauncher.exe
