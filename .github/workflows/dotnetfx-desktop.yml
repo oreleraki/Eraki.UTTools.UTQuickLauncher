@@ -22,7 +22,13 @@ jobs:
     steps:
     # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
     - uses: actions/checkout@v2
-      
+    
+    - name: Get the version
+      id: get_version
+      run: echo ::set-output name=VERSION::$(echo $GITHUB_REF | cut -d / -f 3)
+      #uses: battila7/get-version-action@v2
+      #run: echo ${{ steps.get_version.outputs.version }}
+    
     - name: Setup MSBuild
       uses: microsoft/setup-msbuild@v1
       
@@ -31,12 +37,6 @@ jobs:
     
     #- name: Restore NuGet packages
       #run: nuget restore src\Eraki.UTTools.UTQuickLauncher.sln
-      
-    - name: Get the version
-      id: get_version
-      run: echo ::set-output name=VERSION::$(echo $GITHUB_REF | cut -d / -f 3)
-      #uses: battila7/get-version-action@v2
-      #run: echo ${{ steps.get_version.outputs.version }}
     
     - name: Build the Solution
       run: |
