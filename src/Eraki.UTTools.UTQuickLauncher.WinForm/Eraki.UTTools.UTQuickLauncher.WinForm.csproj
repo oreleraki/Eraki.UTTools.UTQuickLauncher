@@ -103,6 +103,6 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>xcopy "$(TargetPath)" "C:\Games\UnrealTournament\System\$(TargetFileName)*" /y</PostBuildEvent>
+    <PostBuildEvent>if $(ConfigurationName) == Debug xcopy "$(TargetPath)" "C:\Games\UnrealTournament\System\$(TargetFileName)*" /y</PostBuildEvent>
   </PropertyGroup>
 </Project>
