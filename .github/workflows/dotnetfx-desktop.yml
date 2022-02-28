@@ -25,7 +25,7 @@ jobs:
     
     - name: Get the version
       id: echo_get_version
-      run: echo ::set-output name=VERSION::${GITHUB_REF#refs/*/}
+      run: echo ::set-output name=VERSION::$GITHUB_REF
     
     - name: Get the version
       id: get_version
