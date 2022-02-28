@@ -29,7 +29,7 @@ jobs:
     
     #- name: Get the version
       #id: get_version
-      #run: echo ::set-output name=VERSION::$(echo ${{ github.ref }}#refs/*/ }} | cut -d / -f 3)
+      #run: echo ::set-output name=VERSION::$(echo ${{ github.ref }} | cut -d / -f 3)
       #uses: battila7/get-version-action@v2
       #run: echo ${{ steps.get_version.outputs.version }}
     
@@ -51,13 +51,13 @@ jobs:
       uses: mknejp/delete-release-assets@v1
       with:
         token: ${{ github.token }}
-        tag: staging # This may also be of the form 'refs/tags/staging'
+        tag: ${{ github.ref }} # This may also be of the form 'refs/tags/staging'
 
         # Pick one of:
         # 1. a single file name
         assets: UnrealTournamentLauncher.exe
            
-    - name: Upload Release Artifact
+    - name: Upload release artifacts
       #uses: actions/upload-artifact@v2
       #with:
         #name: UTQuickLauncher v${{steps.get_version.outputs.VERSION}}
