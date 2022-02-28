@@ -27,9 +27,9 @@ jobs:
       id: echo_get_version
       run: echo ::set-output name=VERSION::${{ github.ref }}
     
-    - name: Get the version
-      id: get_version
-      run: echo ::set-output name=VERSION::$(echo ${{ github.ref#refs/*/ }} | cut -d / -f 3)
+    #- name: Get the version
+      #id: get_version
+      #run: echo ::set-output name=VERSION::$(echo ${{ github.ref }}#refs/*/ }} | cut -d / -f 3)
       #uses: battila7/get-version-action@v2
       #run: echo ${{ steps.get_version.outputs.version }}
     
