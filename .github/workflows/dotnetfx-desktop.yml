@@ -25,11 +25,11 @@ jobs:
     
     - name: Get the version
       id: echo_get_version
-      run: echo ::set-output name=VERSION::$GITHUB_REF
+      run: echo ::set-output name=VERSION::${{ github.ref }}
     
     - name: Get the version
       id: get_version
-      run: echo ::set-output name=VERSION::$(echo ${GITHUB_REF#refs/*/} | cut -d / -f 3)
+      run: echo ::set-output name=VERSION::$(echo ${{ github.ref#refs/*/ }} | cut -d / -f 3)
       #uses: battila7/get-version-action@v2
       #run: echo ${{ steps.get_version.outputs.version }}
     
