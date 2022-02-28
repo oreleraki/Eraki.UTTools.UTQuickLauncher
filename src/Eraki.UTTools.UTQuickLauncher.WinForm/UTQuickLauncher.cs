@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using System.IO;
+using System.Net;
 
 namespace Eraki.UTTools.UTQuickLauncher.WinForm
 {
@@ -66,8 +67,9 @@ namespace Eraki.UTTools.UTQuickLauncher.WinForm
                 result[i] = new UTFavoriteItem
                 {
                     Name = chunks[0],
-                    Address = $"{chunks[1]}:{int.Parse(chunks[2])-1}",
-                    //Port = int.Parse(chunks[2])
+                    QueryPort = int.Parse(chunks[2]),
+                    GamePort = int.Parse(chunks[2]) - 1,
+                    IpAddress = IPAddress.Parse(chunks[1])
                 };
             }
 

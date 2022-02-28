@@ -83,6 +83,7 @@ namespace Eraki.UTTools.UTQuickLauncher.WinForm
             this.Controls.Add(this.btnClose);
             this.Controls.Add(this.lblAbout);
             this.Name = "FormUTQuickLauncherAbout";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "UT Quick Launcher v0.1: About";
             this.ResumeLayout(false);
             this.PerformLayout();

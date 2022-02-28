@@ -1,7 +1,7 @@
 ﻿
 namespace Eraki.UTTools.UTQuickLauncher.WinForm
 {
-    partial class frmUTQuickLauncher
+    partial class FormUTQuickLauncher
     {
         /// <summary>
         /// Required designer variable.
@@ -29,14 +29,21 @@ namespace Eraki.UTTools.UTQuickLauncher.WinForm
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmUTQuickLauncher));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormUTQuickLauncher));
             this.lblName = new System.Windows.Forms.Label();
             this.tbName = new System.Windows.Forms.TextBox();
             this.cbAsSpectator = new System.Windows.Forms.CheckBox();
             this.btnLaunch = new System.Windows.Forms.Button();
             this.dgvFavorites = new System.Windows.Forms.DataGridView();
+            this.chName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.chPlayers = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.chAddress = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.btnAbout = new System.Windows.Forms.Button();
+            this.btnRefresh = new System.Windows.Forms.Button();
+            this.statusStrip1 = new System.Windows.Forms.StatusStrip();
+            this.tsslStatus = new System.Windows.Forms.ToolStripStatusLabel();
             ((System.ComponentModel.ISupportInitialize)(this.dgvFavorites)).BeginInit();
+            this.statusStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // lblName
@@ -71,7 +78,7 @@ namespace Eraki.UTTools.UTQuickLauncher.WinForm
             // 
             this.btnLaunch.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnLaunch.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
-            this.btnLaunch.Location = new System.Drawing.Point(326, 18);
+            this.btnLaunch.Location = new System.Drawing.Point(335, 18);
             this.btnLaunch.Name = "btnLaunch";
             this.btnLaunch.Size = new System.Drawing.Size(111, 46);
             this.btnLaunch.TabIndex = 6;
@@ -89,18 +96,47 @@ namespace Eraki.UTTools.UTQuickLauncher.WinForm
             | System.Windows.Forms.AnchorStyles.Right)));
             this.dgvFavorites.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.DisplayedCells;
             this.dgvFavorites.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvFavorites.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.chName,
+            this.chPlayers,
+            this.chAddress});
             this.dgvFavorites.Location = new System.Drawing.Point(12, 82);
             this.dgvFavorites.Name = "dgvFavorites";
             this.dgvFavorites.ReadOnly = true;
             this.dgvFavorites.RowHeadersVisible = false;
-            this.dgvFavorites.Size = new System.Drawing.Size(533, 272);
+            this.dgvFavorites.Size = new System.Drawing.Size(758, 252);
             this.dgvFavorites.TabIndex = 7;
             this.dgvFavorites.CellMouseDoubleClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dgvFavorites_CellMouseDoubleClick);
+            this.dgvFavorites.ColumnHeaderMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dgvFavorites_ColumnHeaderMouseClick);
+            // 
+            // chName
+            // 
+            this.chName.DataPropertyName = "Name";
+            this.chName.HeaderText = "Name";
+            this.chName.Name = "chName";
+            this.chName.ReadOnly = true;
+            this.chName.Width = 60;
+            // 
+            // chPlayers
+            // 
+            this.chPlayers.DataPropertyName = "Players";
+            this.chPlayers.HeaderText = "Players";
+            this.chPlayers.Name = "chPlayers";
+            this.chPlayers.ReadOnly = true;
+            this.chPlayers.Width = 66;
+            // 
+            // chAddress
+            // 
+            this.chAddress.DataPropertyName = "Address";
+            this.chAddress.HeaderText = "Address";
+            this.chAddress.Name = "chAddress";
+            this.chAddress.ReadOnly = true;
+            this.chAddress.Width = 70;
             // 
             // btnAbout
             // 
             this.btnAbout.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnAbout.Location = new System.Drawing.Point(466, 18);
+            this.btnAbout.Location = new System.Drawing.Point(504, 18);
             this.btnAbout.Name = "btnAbout";
             this.btnAbout.Size = new System.Drawing.Size(79, 46);
             this.btnAbout.TabIndex = 8;
@@ -108,11 +144,40 @@ namespace Eraki.UTTools.UTQuickLauncher.WinForm
             this.btnAbout.UseVisualStyleBackColor = true;
             this.btnAbout.Click += new System.EventHandler(this.btnAbout_Click);
             // 
-            // frmUTQuickLauncher
+            // btnRefresh
+            // 
+            this.btnRefresh.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnRefresh.Location = new System.Drawing.Point(691, 20);
+            this.btnRefresh.Name = "btnRefresh";
+            this.btnRefresh.Size = new System.Drawing.Size(79, 46);
+            this.btnRefresh.TabIndex = 9;
+            this.btnRefresh.Text = "Refresh";
+            this.btnRefresh.UseVisualStyleBackColor = true;
+            this.btnRefresh.Click += new System.EventHandler(this.btnRefresh_Click);
+            // 
+            // statusStrip1
+            // 
+            this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.tsslStatus});
+            this.statusStrip1.Location = new System.Drawing.Point(0, 341);
+            this.statusStrip1.Name = "statusStrip1";
+            this.statusStrip1.Size = new System.Drawing.Size(782, 22);
+            this.statusStrip1.TabIndex = 10;
+            this.statusStrip1.Text = "statusStrip1";
+            // 
+            // tsslStatus
+            // 
+            this.tsslStatus.Name = "tsslStatus";
+            this.tsslStatus.Size = new System.Drawing.Size(70, 17);
+            this.tsslStatus.Text = "Initializing...";
+            // 
+            // FormUTQuickLauncher
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(557, 366);
+            this.ClientSize = new System.Drawing.Size(782, 363);
+            this.Controls.Add(this.statusStrip1);
+            this.Controls.Add(this.btnRefresh);
             this.Controls.Add(this.btnAbout);
             this.Controls.Add(this.dgvFavorites);
             this.Controls.Add(this.btnLaunch);
@@ -120,11 +185,14 @@ namespace Eraki.UTTools.UTQuickLauncher.WinForm
             this.Controls.Add(this.tbName);
             this.Controls.Add(this.lblName);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Name = "frmUTQuickLauncher";
+            this.Name = "FormUTQuickLauncher";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "UT Quick Launcher v0.1";
-            this.Load += new System.EventHandler(this.frmUTQuickLauncher_Load);
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormUTQuickLauncher_FormClosing);
+            this.Load += new System.EventHandler(this.FormUTQuickLauncher_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dgvFavorites)).EndInit();
+            this.statusStrip1.ResumeLayout(false);
+            this.statusStrip1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -138,6 +206,12 @@ namespace Eraki.UTTools.UTQuickLauncher.WinForm
         private System.Windows.Forms.Button btnLaunch;
         private System.Windows.Forms.DataGridView dgvFavorites;
         private System.Windows.Forms.Button btnAbout;
+        private System.Windows.Forms.Button btnRefresh;
+        private System.Windows.Forms.DataGridViewTextBoxColumn chName;
+        private System.Windows.Forms.DataGridViewTextBoxColumn chPlayers;
+        private System.Windows.Forms.DataGridViewTextBoxColumn chAddress;
+        private System.Windows.Forms.StatusStrip statusStrip1;
+        private System.Windows.Forms.ToolStripStatusLabel tsslStatus;
     }
 }
 
