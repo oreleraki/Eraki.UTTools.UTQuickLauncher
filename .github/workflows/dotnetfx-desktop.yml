@@ -50,7 +50,7 @@ jobs:
         #path: src\Eraki.UTTools.UTQuickLauncher.WinForm\bin\Release\UnrealTournamentLauncher.exe
       uses: svenstaro/upload-release-action@v2
       with:
-        name: UTQuickLauncher v${{steps.get_version.outputs.VERSION}}
+        #asset_name: UTQuickLauncher v${{steps.get_version.outputs.VERSION}}
         repo_token: ${{ secrets.GITHUB_TOKEN }}
         file: src\Eraki.UTTools.UTQuickLauncher.WinForm\bin\Release\UnrealTournamentLauncher.exe
         tag: ${{ github.ref }}
