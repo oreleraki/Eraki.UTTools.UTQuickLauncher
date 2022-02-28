@@ -47,6 +47,16 @@ jobs:
            cd "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild\Current\Bin\"
            .\MSBuild.exe $Env:GITHUB_WORKSPACE\src\Eraki.UTTools.UTQuickLauncher.sln /p:Configuration="Release" /p:Version="${{steps.get_version.outputs.VERSION}}"
            
+    - name: Delete old release assets
+      uses: mknejp/delete-release-assets@v1
+      with:
+        token: ${{ github.token }}
+        tag: staging # This may also be of the form 'refs/tags/staging'
+
+        # Pick one of:
+        # 1. a single file name
+        assets: UnrealTournamentLauncher.exe
+           
     - name: Upload Release Artifact
       #uses: actions/upload-artifact@v2
       #with:
