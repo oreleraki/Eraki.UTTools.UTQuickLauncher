@@ -11,7 +11,6 @@ namespace Eraki.UTTools.UTQuickLauncher.WinForm
         [STAThread]
         static void Main()
         {
-            //new Bla().Query();
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new FormUTQuickLauncher());

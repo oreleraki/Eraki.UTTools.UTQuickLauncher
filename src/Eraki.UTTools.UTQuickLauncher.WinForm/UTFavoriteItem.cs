@@ -2,7 +2,7 @@
 
 namespace Eraki.UTTools.UTQuickLauncher.WinForm
 {
-    public class UTFavoriteItem
+	public class UTFavoriteItem
     {
         public string Name { get; set; }
         public string Address

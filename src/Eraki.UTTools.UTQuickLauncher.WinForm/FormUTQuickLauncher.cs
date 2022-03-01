@@ -97,6 +97,21 @@ namespace Eraki.UTTools.UTQuickLauncher.WinForm
             );
         }
 
+        private IEnumerable<Task> QueryFavoritesAsync2(UTFavoriteItem[] favorites)
+        {
+            return favorites.Select(item =>
+                Task.Run(async () =>
+                {
+                    var response = await _utServerQuery.QueryAsync(new IPEndPoint(item.IpAddress, item.QueryPort));
+                    if (response != null)
+                    {
+                        item.NumberOfPlayers = response.NumberOfPlayers.Value;
+                        item.MaxPlayers = response.MaxPlayers.Value;
+                    }
+                })
+            );
+        }
+
         public void Launch(string serverInfo = "")
         {
             _utQuickLauncher.SetPlayer(tbName.Text, cbAsSpectator.Checked);
@@ -109,8 +124,8 @@ namespace Eraki.UTTools.UTQuickLauncher.WinForm
             var favorites = _favoritesAsDict.Values.ToArray();
             var stopWatch = Stopwatch.StartNew();
             PrintStatus($"Refreshing... {_bindingListFavorites.Count} servers.");
-            await Task.WhenAll(QueryFavoritesAsync(favorites));
-            //await Task.Run(() => QueryFavoritesAsync(favorites));
+            //await Task.WhenAll(QueryFavoritesAsync(favorites));
+            await Task.WhenAll(QueryFavoritesAsync2(favorites));
             foreach (var item in _bindingListFavorites)
             {
                 var r = _favoritesAsDict.TryGetValue(item.Address, out UTFavoriteItem ufi);

@@ -64,6 +64,10 @@ namespace Eraki.UTTools.UTQuickLauncher.WinForm
             {
                 var favoriteValue = iniFile.Read($"Favorites[{i}]", "UBrowser.UBrowserFavoritesFact");
                 var chunks = favoriteValue.Split('\\');
+                if (chunks[1].StartsWith("unreal://", StringComparison.OrdinalIgnoreCase))
+				{
+                    chunks[1] = chunks[1].ToLower().Replace("unreal://", "");
+				}
                 result[i] = new UTFavoriteItem
                 {
                     Name = chunks[0],
