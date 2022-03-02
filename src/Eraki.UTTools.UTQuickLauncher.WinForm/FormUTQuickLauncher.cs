@@ -99,7 +99,9 @@ namespace Eraki.UTTools.UTQuickLauncher.WinForm
 
         private IEnumerable<Task> QueryFavoritesAsync2(UTFavoriteItem[] favorites)
         {
-            return favorites.Select(item =>
+            return favorites
+                .Where(item => item.IpAddress != null)
+                .Select(item =>
                 Task.Run(async () =>
                 {
                     var response = await _utServerQuery.QueryAsync(new IPEndPoint(item.IpAddress, item.QueryPort));
