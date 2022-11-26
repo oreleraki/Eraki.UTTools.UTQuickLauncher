@@ -47,8 +47,6 @@ namespace Eraki.UTTools.UTQuickLauncher.WinForm
             while (_running)
             {
                 var tempIPEndPoint = new IPEndPoint(IPAddress.Any, 0);
-                //if (_udpClient.Available > 0)
-                //{
                 try
                 {
                     var response = _udpClient.Receive(ref tempIPEndPoint);
@@ -74,9 +72,6 @@ namespace Eraki.UTTools.UTQuickLauncher.WinForm
                     // do nothing, thank you.
 					Console.WriteLine(threadAbortException);
 				}
-                //}
-
-                //Thread.Sleep(5);
             }
         }
 
@@ -91,15 +86,11 @@ namespace Eraki.UTTools.UTQuickLauncher.WinForm
 
             UTServerResponse response = null;
             var timeOut = Task.Delay(System.TimeSpan.FromSeconds(1));
-            if (await Task.WhenAny(tcs.Task, timeOut) == timeOut)
+            if (await Task.WhenAny(tcs.Task, timeOut) != timeOut)
 			{
                 //tcs.SetException(new TimeoutException());
-
-            }
-            else
-			{
                 response = (await tcs.Task);
-			}
+            }
             _lockStore.TryRemove(key, out UTServerEntryItem item);
             OnReceiveEvent?.Invoke(this, new OnReceiveEventArgs { Response = response, Address = key });
             return response;

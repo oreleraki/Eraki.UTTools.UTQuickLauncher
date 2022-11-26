@@ -87,7 +87,7 @@ namespace Eraki.UTTools.UTQuickLauncher.WinForm
             return favorites.Select(item =>
                 Task.Run(() =>
                 {
-                    var response = _utServerQuery.Query(new IPEndPoint(item.IpAddress, item.QueryPort));
+                    var response = _utServerQuery.Query(new IPEndPoint(item.IpAddressResolved, item.QueryPort));
                     if (response != null)
                     {
                         item.NumberOfPlayers = response.NumberOfPlayers.Value;
@@ -100,15 +100,23 @@ namespace Eraki.UTTools.UTQuickLauncher.WinForm
         private IEnumerable<Task> QueryFavoritesAsync2(UTFavoriteItem[] favorites)
         {
             return favorites
-                .Where(item => item.IpAddress != null)
+                .Where(item => item.IpAddressResolved != null)
                 .Select(item =>
                 Task.Run(async () =>
                 {
-                    var response = await _utServerQuery.QueryAsync(new IPEndPoint(item.IpAddress, item.QueryPort));
-                    if (response != null)
+                    try
                     {
-                        item.NumberOfPlayers = response.NumberOfPlayers.Value;
-                        item.MaxPlayers = response.MaxPlayers.Value;
+                        var response = await _utServerQuery.QueryAsync(new IPEndPoint(item.IpAddressResolved, item.QueryPort));
+                        if (response != null)
+                        {
+                            item.NumberOfPlayers = response.NumberOfPlayers.Value;
+                            item.MaxPlayers = response.MaxPlayers.Value;
+                        }
+                    }
+                    catch (Exception ex)
+					{
+                        item.NumberOfPlayers = -1;
+                        item.MaxPlayers = -1;
                     }
                 })
             );
@@ -141,6 +149,55 @@ namespace Eraki.UTTools.UTQuickLauncher.WinForm
         private void dgvFavorites_ColumnHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e)
         {
             //dgvFavorites.Sort(dgvFavorites.Columns[e.ColumnIndex], ListSortDirection.Ascending);
+        }
+
+		private void FormUTQuickLauncher_Resize(object sender, EventArgs e)
+		{
+            if (WindowState == FormWindowState.Minimized)
+            {
+                ShowInTaskbar = false;
+                niTray.Visible = true;
+                //niTray.BalloonTipText = "yes";
+                //niTray.ShowBalloonTip(1000);
+
+                if (tsmiServers.DropDownItems.Count == 0)
+				{
+                    foreach (var item in _favoritesAsDict)
+                    {
+                        string name = item.Value.Name.Substring(0, Math.Min(50, item.Value.Name.Length));
+                        var subItem = new ToolStripMenuItem($"[{item.Value.Address}] {name}");
+                        subItem.Click += ClickedOnSubMenu;
+                        tsmiServers.DropDownItems.Add(subItem);
+                    }
+                }
+            }
+
+            void ClickedOnSubMenu(object s, EventArgs evt)
+			{
+                string name = s.ToString().Split(' ')[0];
+                Launch(name.Substring(1, name.Length-2));
+			}
+        }
+
+		private void niTray_MouseDoubleClick(object sender, MouseEventArgs e)
+		{
+            // Set the WindowState to normal if the form is minimized.
+            if (WindowState == FormWindowState.Minimized)
+                WindowState = FormWindowState.Normal;
+
+            // Activate the form.
+            Activate();
+        }
+
+		private void tsmiOpen_Click(object sender, EventArgs e)
+		{
+            WindowState = FormWindowState.Normal;
+            Activate();
+        }
+
+		private void tsmiExit_Click(object sender, EventArgs e)
+		{
+            Close();
         }
     }
 }

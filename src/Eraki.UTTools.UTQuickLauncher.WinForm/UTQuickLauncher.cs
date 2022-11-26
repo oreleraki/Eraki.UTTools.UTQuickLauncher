@@ -68,23 +68,13 @@ namespace Eraki.UTTools.UTQuickLauncher.WinForm
 				{
                     chunks[1] = chunks[1].ToLower().Replace("unreal://", "");
 				}
-                if (!IPAddress.TryParse(chunks[1], out IPAddress ip))
-                {
-                    try
-					{
-                        ip = Dns.GetHostEntry(chunks[1]).AddressList[0];
-					}
-                    catch (Exception ex)
-					{
-						Console.WriteLine($"Problem while DnsHostEntry resolving of {chunks[1]}, Exception: {ex}");
-					}
-                }
                 result[i] = new UTFavoriteItem
                 {
                     Name = chunks[0],
                     QueryPort = int.Parse(chunks[2]),
                     GamePort = int.Parse(chunks[2]) - 1,
-                    IpAddress = ip
+                    //IpAddress = ip
+                    Host = chunks[1]
                 };
             }
 
